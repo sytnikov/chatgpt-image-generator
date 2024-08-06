@@ -1,23 +1,20 @@
+export interface ImageArtifact {
+  base64: string
+  seed: number
+  finishReason: string
+}
+
 export interface ImageModelData {
-  artifacts: [
-    {
-      base64: string
-      seed: number
-      finishReason: string
-    }
-  ]
+  artifacts: ImageArtifact[]
 }
 
 export async function fetchImageModelData(
   input: string
 ): Promise<ImageModelData> {
-  // const imageUrls = []
-
   const randomNum = getRandomNum(1, 1000)
   const prompt = `${input} ${randomNum}`
 
   try {
-    // Call the server's endpoint
     const response = await fetch(
       'https://image-generator-proxy-server.vercel.app/stability-model',
       {
@@ -25,7 +22,7 @@ export async function fetchImageModelData(
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }), // Send the prompt to the server
+        body: JSON.stringify({ prompt }),
       }
     )
 
@@ -40,7 +37,7 @@ export async function fetchImageModelData(
 
     return data
   } catch (error) {
-    console.error('Error generating image:', error)
+    console.log('Error generating image:', error)
     alert('Unable to generate an image...')
   }
 }

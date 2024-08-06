@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
-    page: path.resolve('src/page/page.tsx'),
+    App: path.resolve('src/App/App.tsx'),
     options: path.resolve('src/options/options.tsx'),
     background: path.resolve('src/background/background.ts'),
     contentScript: path.resolve('src/contentScript/contentScript.ts'),
@@ -39,7 +39,7 @@ module.exports = {
         },
       ],
     }),
-    ...getHtmlPlugins(['page', 'options']),
+    ...getHtmlPlugins(['App', 'options']),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

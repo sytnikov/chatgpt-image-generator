@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Onest', sans-serif;
+  overflow: hidden;
+}
+
+body {
+  background: linear-gradient(90deg, #0b0d15, #2f205d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}

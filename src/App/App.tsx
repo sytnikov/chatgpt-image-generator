@@ -1,19 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import './page.css'
-import ImageTile from './ImageTile'
+import './App.css'
+import Container from './Container'
 
 const App: React.FC<{}> = () => {
-  const numberOfImages = 2
-  const input = 'a blue goat'
-  const inputs = Array(numberOfImages).fill(input)
-
   return (
     <div>
-      {inputs.map((input, index) => (
-        <ImageTile key={index} input={input} />
-      ))}
+      <Container />
     </div>
   )
 }
