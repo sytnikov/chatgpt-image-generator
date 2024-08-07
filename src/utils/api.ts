@@ -9,20 +9,27 @@ export interface ImageModelData {
 }
 
 export async function fetchImageModelData(
-  input: string
+  input: string,
+  size: string,
+  style: string
 ): Promise<ImageModelData> {
   const randomNum = getRandomNum(1, 1000)
-  const prompt = `${input} ${randomNum}`
+  const prompt = `${input} in the ${style} style ${randomNum}`
+
+  const measurements = size.split('x')
+  const width = Number(measurements[0])
+  const height = Number(measurements[1])
 
   try {
     const response = await fetch(
       'https://image-generator-proxy-server.vercel.app/stability-model',
+      // 'http://localhost:8000/stability-model',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, width, height }),
       }
     )
 
@@ -31,9 +38,6 @@ export async function fetchImageModelData(
     }
 
     const data: ImageModelData = await response.json()
-
-    const base64String = data.artifacts[0].base64
-    const imageUrl = `data:image/png;base64,${base64String}`
 
     return data
   } catch (error) {

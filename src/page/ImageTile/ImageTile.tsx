@@ -5,13 +5,20 @@ import { ImageModelData, fetchImageModelData } from '../../utils/api'
 export type ImageTileProps = {
   input: string
   onClick: (imageUrl: string) => void
+  size: string
+  style: string
 }
 
-const ImageTile: React.FC<ImageTileProps> = ({ input, onClick }) => {
+const ImageTile: React.FC<ImageTileProps> = ({
+  input,
+  onClick,
+  size,
+  style,
+}) => {
   const [imageData, setImageData] = useState<ImageModelData | null>(null)
 
   useEffect(() => {
-    fetchImageModelData(input)
+    fetchImageModelData(input, size, style)
       .then((data) => setImageData(data))
       .catch((err) =>
         console.log(
@@ -22,7 +29,11 @@ const ImageTile: React.FC<ImageTileProps> = ({ input, onClick }) => {
   }, [input])
 
   if (!imageData) {
-    return <div>Loading...</div>
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    )
   }
 
   const base64String = imageData.artifacts[0].base64

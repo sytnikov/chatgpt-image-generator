@@ -5,5 +5,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 })
 
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: 'App.html' })
+  chrome.tabs.create({ url: 'page.html' })
 })

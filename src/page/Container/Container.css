@@ -33,6 +33,29 @@ p {
   text-align: left;
 }
 
+.dropdowns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dropdown {
+  border: none;
+  outline: none;
+  min-width: 150px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 0px 5px;
+  background-color: whitesmoke;
+}
+
 .gen-form {
   margin-top: 20px;
   display: flex;
@@ -42,7 +65,7 @@ p {
 }
 
 input {
-  width: 80%;
+  width: 90%;
   border-radius: 5px;
   outline: none;
   border: none;
@@ -88,16 +111,31 @@ input:focus {
   background: linear-gradient(150deg, #cf8bf6, #724fdf);
 }
 
+.download-btn {
+  position: absolute;
+  border: none;
+  outline: none;
+  width: 30px;
+  bottom: 10px;
+  right: 10px;
+  background-color: #cf8bf6;
+  padding: 4px;
+}
+
+.download-btn:hover {
+  background-color: #724fdf;
+}
+
 #image-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-evenly;
   gap: 10px;
   margin: 20px 0px;
   width: auto;
 }
 
 #image-grid img {
-  max-width: 90px;
+  max-width: 150px;
   border-radius: 10px;
   cursor: pointer;
   border: 2px solid transparent;
@@ -111,4 +149,32 @@ input:focus {
 #enlarged-image {
   max-width: 500px;
   border-radius: 10px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(245, 245, 245, 0);
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+}
+
+.loader {
+  border: 8px solid whitesmoke;
+  border-top: 8px solid #cf8bf6;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
