@@ -18,6 +18,10 @@
   display: block;
 }
 
+.instructions {
+  margin: 10px 0px 30px 0px;
+}
+
 h1 {
   font-size: 14px;
   font-weight: 900;
@@ -44,6 +48,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex-grow: 1;
 }
 
 .dropdown {
@@ -128,6 +133,7 @@ input:focus {
 
 #image-grid {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 10px;
   margin: 20px 0px;

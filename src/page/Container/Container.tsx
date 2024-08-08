@@ -47,6 +47,13 @@ const Container: React.FC = () => {
     <div className="container">
       <div className="left-container">
         <Header />
+        <div className="instructions">
+          <h1>Hi 👋</h1>
+          <p>
+            Choose your preferable settings from the dropdown lists and write a prompt to generate
+            images!
+          </p>
+        </div>
         <div className="dropdowns">
           <div className="dropdown-section">
             <label htmlFor="num-pictures">Number of pictures:</label>
