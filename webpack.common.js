@@ -9,6 +9,7 @@ module.exports = {
     options: path.resolve('src/options/options.tsx'),
     background: path.resolve('src/background/background.ts'),
     contentScript: path.resolve('src/contentScript/contentScript.ts'),
+    widget: path.resolve('src/contentScript/Widget.tsx'),
   },
   module: {
     rules: [
