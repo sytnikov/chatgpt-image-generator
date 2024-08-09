@@ -5,6 +5,13 @@ header {
   margin-bottom: 16px;
 }
 
+.header-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .btn {
   border-radius: 8px;
   cursor: pointer;

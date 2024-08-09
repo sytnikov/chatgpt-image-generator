@@ -3,6 +3,7 @@ import ImageTile from '../ImageTile'
 
 import './Container.css'
 import Header from '../Header'
+import ImageModal from '../ImageModal'
 
 const Container: React.FC = () => {
   const [input, setInput] = useState<string>('')
@@ -32,17 +33,6 @@ const Container: React.FC = () => {
     setSelectedImage(imageUrl)
   }
 
-  const handleDownloadClick = () => {
-    if (selectedImage) {
-      const link = document.createElement('a')
-      link.href = selectedImage
-      link.download = `image-${new Date().getTime()}.png`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
-  }
-
   return (
     <div className="container">
       <div className="left-container">
@@ -50,8 +40,8 @@ const Container: React.FC = () => {
         <div className="instructions">
           <h1>Hi 👋</h1>
           <p>
-            Choose your preferable settings from the dropdown lists and write a prompt to generate
-            images!
+            Choose your preferable settings from the dropdown lists and write a
+            prompt to generate images!
           </p>
         </div>
         <div className="dropdowns">
@@ -135,16 +125,20 @@ const Container: React.FC = () => {
       </div>
 
       {selectedImage && (
-        <div className="right-container">
-          <img
-            src={selectedImage}
-            alt="enlarged generated image"
-            id="enlarged-image"
-          />
-          <button className="btn download-btn" onClick={handleDownloadClick}>
-            <img src="images/download.svg" alt="download icon" />
-          </button>
-        </div>
+        // <div className="right-container">
+        //   <img
+        //     src={selectedImage}
+        //     alt="enlarged generated image"
+        //     id="enlarged-image"
+        //   />
+        //   <button className="btn download-btn" onClick={handleDownloadClick}>
+        //     <img src="images/download.svg" alt="download icon" />
+        //   </button>
+        // </div>
+        <ImageModal
+          imageUrl={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
       )}
     </div>
   )

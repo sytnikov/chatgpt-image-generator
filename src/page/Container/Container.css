@@ -5,6 +5,8 @@
   gap: 30px;
   color: white;
   margin: 0px 10px;
+  margin: auto;
+  width: 600px;
 }
 
 .left-container {
@@ -133,7 +135,7 @@ input:focus {
 
 #image-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-evenly;
   gap: 10px;
   margin: 20px 0px;
@@ -141,7 +143,8 @@ input:focus {
 }
 
 #image-grid img {
-  max-width: 150px;
+  max-width: 100%;
+  max-height: 300px;
   border-radius: 10px;
   cursor: pointer;
   border: 2px solid transparent;
