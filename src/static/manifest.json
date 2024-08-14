@@ -24,10 +24,12 @@
       "js": ["contentScript.js"]
     }
   ],
-  "permissions": ["storage", "activeTab", "tabs"],
+  "permissions": ["storage", "alarms", "contextMenus", "activeTab", "tabs"],
   "web_accessible_resources": [
     {
-      "resources": ["widget.js"],
+      "resources": [
+        "static/images/*"
+      ],
       "matches": ["<all_urls>"]
     }
   ]

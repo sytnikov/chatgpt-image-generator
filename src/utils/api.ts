@@ -1,3 +1,5 @@
+import { getRandomNum } from "./utils"
+
 export interface ImageArtifact {
   base64: string
   seed: number
@@ -44,8 +46,4 @@ export async function fetchImageModelData(
     console.log('Error generating image:', error)
     alert('Unable to generate an image...')
   }
-}
-
-function getRandomNum(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
