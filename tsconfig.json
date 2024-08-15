@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "module": "esnext",
+    "module": "ES6",
     "target": "ES6",
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/types/svg.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

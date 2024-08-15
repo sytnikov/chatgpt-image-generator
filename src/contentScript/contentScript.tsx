@@ -47,10 +47,24 @@ const WidgetWrapper = () => {
       })
     })
   }, [])
-  // Handle modal open and close logic here
+
   const handleModalOpen = () => {
     console.log('Modal Opened')
-    // Logic to handle modal open
+
+    chrome.tabs.query(
+      {
+        active: true,
+      },
+      (tabs) => {
+        const pageTab = tabs.find((tab) => tab.url?.includes('page.html'))
+
+        if (pageTab) {
+          chrome.tabs.update(pageTab.id!, { active: true })
+        } else {
+          chrome.tabs.create({ url: 'page.html' })
+        }
+      }
+    )
   }
 
   return (

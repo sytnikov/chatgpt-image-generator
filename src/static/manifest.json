@@ -24,13 +24,5 @@
       "js": ["contentScript.js"]
     }
   ],
-  "permissions": ["storage", "alarms", "contextMenus", "activeTab", "tabs"],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "static/images/*"
-      ],
-      "matches": ["<all_urls>"]
-    }
-  ]
+  "permissions": ["storage", "alarms", "contextMenus", "activeTab", "tabs"]
 }
