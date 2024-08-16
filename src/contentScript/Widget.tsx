@@ -11,9 +11,8 @@ import WidgetButtons, {
   LEFT_EDGE_CLASS_NAME,
   RIGHT_EDGE_CLASS_NAME,
 } from './WidgetButtons'
+import { MINIMIZED_KEY, POSITION_KEY } from '../utils/constants'
 
-export const POSITION_KEY = 'widget_position'
-export const MINIMIZED_KEY = 'widget_is_minimized'
 export const zIndexMaxValue = 2147483647
 export const widgetWidth = 32
 

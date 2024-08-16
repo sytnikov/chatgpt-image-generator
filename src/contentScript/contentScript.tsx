@@ -6,11 +6,10 @@ import Widget, {
   WidgetPosition,
   getMaxDefaultX,
   widgetWidth,
-  zIndexMaxValue,
-  POSITION_KEY,
-  MINIMIZED_KEY,
+  zIndexMaxValue
 } from './Widget'
 import { storageGet } from '../utils/storage'
+import { MINIMIZED_KEY, POSITION_KEY } from '../utils/constants'
 
 const defaultX: number = document?.documentElement?.clientWidth
   ? document.documentElement.clientWidth - widgetWidth
@@ -49,23 +48,9 @@ const WidgetWrapper = () => {
   }, [])
 
   const handleModalOpen = () => {
-    console.log('Modal Opened')
-
-    chrome.tabs.query(
-      {
-        active: true,
-      },
-      (tabs) => {
-        const pageTab = tabs.find((tab) => tab.url?.includes('page.html'))
-
-        if (pageTab) {
-          chrome.tabs.update(pageTab.id!, { active: true })
-        } else {
-          chrome.tabs.create({ url: 'page.html' })
-        }
-      }
-    )
-  }
+    console.log('Modal Opened');
+    chrome.runtime.sendMessage({ action: 'openOrCreateTab' });
+  };
 
   return (
     <Box
