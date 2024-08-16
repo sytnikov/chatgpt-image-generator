@@ -4,6 +4,8 @@ import { Button, IconButton, Stack } from '@mui/material'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 
+import Logo from '../static/images/logo-widget.svg';
+
 const CROSS_BGCOLOR = 'rgba(0, 0, 0, .4)'
 export const MINIMIZED_CN = 'minimized-arrow'
 export const LEFT_EDGE_CLASS_NAME = 'left-edge'
@@ -23,8 +25,8 @@ function WidgetButtons({ onLogoClick, isLeft, hovered, minimized, handleSetMinim
 
   const crossBtnBackground = hovered ? CROSS_BGCOLOR : ''
 
-  // const imageUrl = new URL(`${}#id`, import.meta.url)
-  // console.log('imageUrl:', imageUrl)
+  const imageUrl = new URL(`${Logo}#id`, import.meta.url)
+  console.log('imageUrl:', imageUrl)
 
   return (
     !minimized
@@ -41,7 +43,7 @@ function WidgetButtons({ onLogoClick, isLeft, hovered, minimized, handleSetMinim
             }}
           >
             <Stack color={'white'}>
-              <img alt="logo" style={{ pointerEvents: 'none' }} width={'32px'} height={'32px'} />
+              <img alt="logo" src={imageUrl.href} style={{ pointerEvents: 'none' }} width={'32px'} height={'32px'} />
             </Stack>
           </Button>
           <IconButton
