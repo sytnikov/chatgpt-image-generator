@@ -26,7 +26,6 @@ function WidgetButtons({ onLogoClick, isLeft, hovered, minimized, handleSetMinim
   const crossBtnBackground = hovered ? CROSS_BGCOLOR : ''
 
   const imageUrl = new URL(`${Logo}#id`, import.meta.url)
-  console.log('imageUrl:', imageUrl)
 
   return (
     !minimized
