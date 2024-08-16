@@ -53,7 +53,7 @@ const Container: React.FC = () => {
               className="dropdown"
               id="num-pictures"
             >
-              {[1, 2, 3, 4].map((num, index) => (
+              {[1, 2, 3].map((num, index) => (
                 <option key={index} value={num}>
                   {num}
                 </option>
@@ -125,16 +125,6 @@ const Container: React.FC = () => {
       </div>
 
       {selectedImage && (
-        // <div className="right-container">
-        //   <img
-        //     src={selectedImage}
-        //     alt="enlarged generated image"
-        //     id="enlarged-image"
-        //   />
-        //   <button className="btn download-btn" onClick={handleDownloadClick}>
-        //     <img src="images/download.svg" alt="download icon" />
-        //   </button>
-        // </div>
         <ImageModal
           imageUrl={selectedImage}
           onClose={() => setSelectedImage(null)}
