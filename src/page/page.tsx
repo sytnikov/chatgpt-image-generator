@@ -7,6 +7,7 @@ import Container from './Container'
 const App: React.FC<{}> = () => {
   return (
     <div>
+      <div className='oval-stain'></div>
       <Container />
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ImageTile from '../ImageTile'
 
 import './Container.css'
@@ -13,6 +13,7 @@ const Container: React.FC = () => {
   const [numPictures, setNumPictures] = useState<number>(1)
   const [pictureSize, setPictureSize] = useState<string>('1024x1024')
   const [pictureStyle, setPictureStyle] = useState<string>('anime')
+  const textareaRef = useRef(null)
 
   useEffect(() => {
     if (generateClicked) {
@@ -33,46 +34,52 @@ const Container: React.FC = () => {
     setSelectedImage(imageUrl)
   }
 
+  useEffect(() => {
+    adjustTextareaHeight()
+  }, [input])
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current
+    textarea.style.height = "auto"
+    textarea.style.height = `${textarea.scrollHeight}px`
+  }
+
   return (
-    <div className="container">
-      <div className="left-container">
+    <>
+      <div className="container">
         <Header />
-        <div className="instructions">
-          <h1>Write a prompt below ✍🏼</h1>
-          <p>What image would you like to generate?</p>
-        </div>
-        <div className="examples">
-          <p>For example:</p>
-          <div className="examples-options">
-            <p className="examples-options__styling">
-              a giraffe wearing sunglasses
-            </p>
-            <p className="examples-options__styling">a yellow vintage car</p>
-            <p className="examples-options__styling">
-              ancient ruins underwater
-            </p>
+        <div className="container-wrapper">
+          <div className="instructions">
+            <h1>Write a prompt below ✍🏼</h1>
+            <p>What image would you like to generate?</p>
+          </div>
+          <div className="example">
+            <p>For example:</p>
+            <text>
+              a giraffe wearing sunglasses, or ancient ruins underwater
+            </text>
           </div>
         </div>
-        <div className='gen-wrapper'>
+
+        <div className="container-wrapper">
           <div className="dropdowns">
             <div className="dropdown-section">
-              <label htmlFor="num-pictures">Number of pictures:</label>
-              <select
-                value={numPictures}
-                onChange={(e) => setNumPictures(Number(e.target.value))}
-                className="dropdown"
-                id="num-pictures"
-              >
+              <label htmlFor="num-pictures">Number of pictures</label>
+              <div className="dropdown-btn-section" id="num-pictures">
                 {[1, 2, 3].map((num, index) => (
-                  <option key={index} value={num}>
+                  <button
+                    key={index}
+                    onClick={() => setNumPictures(num)}
+                    className={numPictures === num ? 'active' : ''}
+                  >
                     {num}
-                  </option>
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
 
             <div className="dropdown-section">
-              <label htmlFor="picture-size">Size of pictures:</label>
+              <label htmlFor="picture-size">Size of pictures</label>
               <select
                 value={pictureSize}
                 onChange={(e) => setPictureSize(e.target.value)}
@@ -88,14 +95,26 @@ const Container: React.FC = () => {
             </div>
 
             <div className="dropdown-section">
-              <label htmlFor="picture-style">Style of pictures:</label>
+              <label htmlFor="picture-style">Style of pictures</label>
               <select
                 value={pictureStyle}
                 onChange={(e) => setPictureStyle(e.target.value)}
                 className="dropdown"
                 id="picture-style"
               >
-                {['anime', 'realistic', 'abstract'].map((style, index) => (
+                {[
+                  'Realistic',
+                  'Abstract',
+                  'Anime',
+                  'Oil Painting',
+                  'Cinematic',
+                  'Digital Art',
+                  'Cyberpank',
+                  'Line Art',
+                  'Photographic',
+                  'Ad Poster',
+                  '3D',
+                ].map((style, index) => (
                   <option key={index} value={style}>
                     {style}
                   </option>
@@ -105,13 +124,15 @@ const Container: React.FC = () => {
           </div>
 
           <form className="gen-form">
-            <input
-              type="text"
+            <textarea
+              ref={textareaRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your prompt here..."
+              placeholder="Describe the image you would like to generate here..."
               autoComplete="off"
               id="user-prompt"
+              style={{ resize: 'vertical', overflow: 'hidden' }}
+              maxLength={300}
             />
             <button
               onClick={handleGenerateClick}
@@ -142,7 +163,7 @@ const Container: React.FC = () => {
           onClose={() => setSelectedImage(null)}
         />
       )}
-    </div>
+    </>
   )
 }
 

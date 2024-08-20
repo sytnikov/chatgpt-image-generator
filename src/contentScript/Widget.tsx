@@ -42,9 +42,9 @@ const widgetBoxSX: SxProps = {
   alignItems: 'center',
   borderRadius: '4px',
   border: 'none',
-  background: 'rgba(207, 139, 246, 0.7)',
+  background: 'rgba(114, 79, 223, 0.5)',
   '&:hover': {
-    background: 'rgba(114, 79, 223, 0.5)',
+    background: 'rgba(207, 139, 246, 0.7)',
   },
 }
 

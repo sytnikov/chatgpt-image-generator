@@ -1,6 +1,8 @@
 import { MINIMIZED_KEY, POSITION_KEY } from '../utils/constants'
 import * as storage from '../utils/storage'
 
+const UNINSTALL_URL = "https://gpt-image-generator.com/uninstall-page/"
+
 console.log('Background script is running!')
 
 chrome.runtime.onInstalled.addListener((details) => {
@@ -44,5 +46,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true
   }
 })
+
+chrome.runtime.setUninstallURL(UNINSTALL_URL)
 
 
