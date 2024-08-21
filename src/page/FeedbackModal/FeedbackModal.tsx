@@ -8,7 +8,8 @@ type FeedbackModalProps = {
 
 const chromeReviewUrl =
   'https://chromewebstore.google.com/detail/nnpdeoblieaeppbbemdbdbpajcpoogcp/reviews'
-const feedbackFormUrl = ''
+const feedbackFormUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdTe7XyOY1BALL6gAQJzgHYYsYQaLKv0BlHp2A8c2UOw4utdg/viewform'
 
 const FeedbackModal: React.FunctionComponent<FeedbackModalProps> = ({
   onClose,
