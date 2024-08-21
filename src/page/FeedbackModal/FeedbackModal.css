@@ -1,0 +1,92 @@
+.feedback-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.feedback-popup {
+  background-color: rgba(42, 50, 80, 1);
+  width: 600px;
+  height: 350px;
+  border-radius: 10px;
+  overflow: visible;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.feedback-close {
+  position: absolute;
+  top: -6px;
+  right: -28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+}
+
+.full-stars {
+  text-align: center;
+}
+
+.full-stars .rating-group {
+  display: inline-flex;
+}
+
+.full-stars input {
+  position: absolute;
+  left: -9999px;
+}
+
+.full-stars label {
+  margin: 0;
+  cursor: pointer;
+}
+
+.full-stars label a svg {
+  margin: 6px;
+  height: 35px;
+  width: 35px;
+  fill: #FFD700;
+  transition: fill 0.3s;
+}
+
+.full-stars input:checked ~ label a svg {
+  fill: #d9d9d9;
+}
+
+.full-stars .rating-group:hover label a svg {
+  fill: #FFD700;
+}
+
+.full-stars .rating-group input:hover ~ label a svg {
+  fill: #d9d9d9;
+}
+
+.feedback-text__thank {
+  font-size: 22px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.feedback-text__rate {
+  font-size: 26px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4rem;
+}

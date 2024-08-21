@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  gap: 20px;
+  gap: 10px;
   min-width: 380px;
   max-width: 600px;
   margin: auto;
@@ -71,7 +71,7 @@ label {
   height: 36px;
   border-radius: 5px;
   padding: 8px;
-  background-color: rgba(114, 79, 223, 0.1);
+  background: linear-gradient(to bottom right, rgba(39, 27, 75, 0.6), rgba(207, 139, 246, 0.3));
   color: whitesmoke;
 }
 
@@ -170,9 +170,8 @@ textarea:focus {
 #image-grid {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-evenly;
+  justify-content: center;
   gap: 10px;
-  margin: 20px 0px;
   width: auto;
 }
 

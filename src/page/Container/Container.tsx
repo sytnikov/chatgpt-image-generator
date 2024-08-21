@@ -4,6 +4,7 @@ import ImageTile from '../ImageTile'
 import './Container.css'
 import Header from '../Header'
 import ImageModal from '../ImageModal'
+import FeedbackModal from '../FeedbackModal'
 
 const Container: React.FC = () => {
   const [input, setInput] = useState<string>('')
@@ -13,6 +14,8 @@ const Container: React.FC = () => {
   const [numPictures, setNumPictures] = useState<number>(1)
   const [pictureSize, setPictureSize] = useState<string>('1024x1024')
   const [pictureStyle, setPictureStyle] = useState<string>('anime')
+  const [feedbackPopup, setFeedbackPopup] = useState<boolean>(false)
+  const [clickCount, setClickCount] = useState<number>(0)
   const textareaRef = useRef(null)
 
   useEffect(() => {
@@ -23,11 +26,16 @@ const Container: React.FC = () => {
     }
   }, [generateClicked, input, numPictures])
 
-  const handleGenerateClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleGenerateClick = (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
     event.preventDefault()
     setInputs([])
     setSelectedImage(null)
     setGenerateClicked(true)
+    setClickCount((prevCount) => prevCount + 1)
+
+    if (clickCount + 1 === 3) {
+      setFeedbackPopup(true)
+    }
   }
 
   const handleImageClick = (imageUrl: string) => {
@@ -42,6 +50,16 @@ const Container: React.FC = () => {
     const textarea = textareaRef.current
     textarea.style.height = "auto"
     textarea.style.height = `${textarea.scrollHeight}px`
+  }
+
+  const handleCloseFeedbackPopup = () => {
+    setFeedbackPopup(false)
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      handleGenerateClick(event)
+    }
   }
 
   return (
@@ -128,11 +146,11 @@ const Container: React.FC = () => {
               ref={textareaRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="Describe the image you would like to generate here..."
               autoComplete="off"
               id="user-prompt"
-              style={{ resize: 'vertical', overflow: 'hidden' }}
-              maxLength={300}
+              style={{ resize: 'vertical', overflow: 'hidden', maxHeight: "81px" }}
             />
             <button
               onClick={handleGenerateClick}
@@ -162,6 +180,10 @@ const Container: React.FC = () => {
           imageUrl={selectedImage}
           onClose={() => setSelectedImage(null)}
         />
+      )}
+
+      {feedbackPopup && (
+        <FeedbackModal onClose={handleCloseFeedbackPopup}/>
       )}
     </>
   )
