@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import ImageTile from '../ImageTile'
 
+import ImageTile from '../ImageTile'
 import './Container.css'
 import Header from '../Header'
 import ImageModal from '../ImageModal'
@@ -13,7 +13,7 @@ const Container: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [numPictures, setNumPictures] = useState<number>(1)
   const [pictureSize, setPictureSize] = useState<string>('1024x1024')
-  const [pictureStyle, setPictureStyle] = useState<string>('anime')
+  const [pictureStyle, setPictureStyle] = useState<string>('Realistic')
   const [feedbackPopup, setFeedbackPopup] = useState<boolean>(false)
   const [clickCount, setClickCount] = useState<number>(0)
   const textareaRef = useRef(null)
@@ -26,7 +26,11 @@ const Container: React.FC = () => {
     }
   }, [generateClicked, input, numPictures])
 
-  const handleGenerateClick = (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleGenerateClick = (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     event.preventDefault()
     setInputs([])
     setSelectedImage(null)
@@ -48,7 +52,7 @@ const Container: React.FC = () => {
 
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current
-    textarea.style.height = "auto"
+    textarea.style.height = 'auto'
     textarea.style.height = `${textarea.scrollHeight}px`
   }
 
@@ -57,7 +61,7 @@ const Container: React.FC = () => {
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleGenerateClick(event)
     }
   }
@@ -150,7 +154,11 @@ const Container: React.FC = () => {
               placeholder="Describe the image you would like to generate here..."
               autoComplete="off"
               id="user-prompt"
-              style={{ resize: 'vertical', overflow: 'hidden', maxHeight: "81px" }}
+              style={{
+                resize: 'vertical',
+                overflow: 'hidden',
+                maxHeight: '81px',
+              }}
             />
             <button
               onClick={handleGenerateClick}
@@ -182,9 +190,7 @@ const Container: React.FC = () => {
         />
       )}
 
-      {feedbackPopup && (
-        <FeedbackModal onClose={handleCloseFeedbackPopup}/>
-      )}
+      {feedbackPopup && <FeedbackModal onClose={handleCloseFeedbackPopup} />}
     </>
   )
 }
