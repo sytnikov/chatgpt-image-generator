@@ -50,6 +50,14 @@ label {
   font-weight: 100;
 }
 
+/* for Windows */
+select option {
+  background-color: #f8f8f8;
+  color: #333;              
+  padding: 10px;            
+  font-weight: normal;        
+}
+
 .dropdowns {
   display: flex;
   align-items: center;
