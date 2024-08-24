@@ -5,6 +5,9 @@ import './Container.css'
 import Header from '../Header'
 import ImageModal from '../ImageModal'
 import FeedbackModal from '../FeedbackModal'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import * as storage from '../../utils/storage'
+import { GENERATIONS_KEY } from '../../utils/constants'
 
 const Container: React.FC = () => {
   const [input, setInput] = useState<string>('')
@@ -17,6 +20,17 @@ const Container: React.FC = () => {
   const [feedbackPopup, setFeedbackPopup] = useState<boolean>(false)
   const [clickCount, setClickCount] = useState<number>(0)
   const textareaRef = useRef(null)
+
+  useEffect(() => {
+    storage.storageGet(GENERATIONS_KEY, (storedData: string = '0') => {
+      const genNum = Number(JSON.parse(storedData))
+      setClickCount(genNum)
+    })
+  }, [])
+
+  useEffect(() => {
+    storage.storageSet(GENERATIONS_KEY, clickCount)
+  }, [clickCount])
 
   useEffect(() => {
     if (generateClicked) {
@@ -35,11 +49,16 @@ const Container: React.FC = () => {
     setInputs([])
     setSelectedImage(null)
     setGenerateClicked(true)
-    setClickCount((prevCount) => prevCount + 1)
-
-    if (clickCount + 1 === 3) {
-      setFeedbackPopup(true)
-    }
+    setClickCount((prevCount) => {
+      const updatedCount = prevCount + 1
+      if (
+        updatedCount === 3 ||
+        (updatedCount > 3 && (updatedCount - 3) % 10 === 0)
+      ) {
+        setFeedbackPopup(true)
+      }
+      return updatedCount
+    })
   }
 
   const handleImageClick = (imageUrl: string) => {
@@ -82,7 +101,6 @@ const Container: React.FC = () => {
             </text>
           </div>
         </div>
-
         <div className="container-wrapper">
           <div className="dropdowns">
             <div className="dropdown-section">

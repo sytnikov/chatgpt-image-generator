@@ -1,4 +1,4 @@
-import { MINIMIZED_KEY, POSITION_KEY } from '../utils/constants'
+import { MINIMIZED_KEY, POSITION_KEY, GENERATIONS_KEY } from '../utils/constants'
 import * as storage from '../utils/storage'
 
 const UNINSTALL_URL = "https://gpt-image-generator.com/uninstall-page/"
@@ -11,6 +11,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   }
   storage.storageSet(POSITION_KEY, JSON.stringify({ x: '100%', y: '50%' }))
   storage.storageSet(MINIMIZED_KEY, false)
+  storage.storageSet(GENERATIONS_KEY, 0)
 })
 
 chrome.action.onClicked.addListener(() => {
