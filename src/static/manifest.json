@@ -25,5 +25,6 @@
       "run_at": "document_end"
     }
   ],
-  "permissions": ["storage", "alarms", "contextMenus", "activeTab", "tabs"]
+  "permissions": ["storage", "alarms", "contextMenus", "activeTab", "tabs"],
+  "host_permissions": [ "http://*/*", "https://*/*"]
 }
