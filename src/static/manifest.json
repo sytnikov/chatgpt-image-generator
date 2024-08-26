@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT Image Generator",
-  "description": "Generate images from a text prompt",
+  "name": "__MSG_appName__",
+  "description": "__MSG_shortDesc__",
+  "default_locale": "en",
   "version": "1.0.0",
   "icons": {
     "16": "icons/icon-16.png",
