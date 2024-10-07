@@ -36,4 +36,4 @@ This Chrome extension allows users to input a prompt and receive a set of AI-gen
 
 ## Deployment
 
-The backend proxy server is deployed on Vercel.
+The backend proxy server is deployed on [Vercel](https://vercel.com).
