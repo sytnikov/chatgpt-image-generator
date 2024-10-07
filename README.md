@@ -1,6 +1,6 @@
 # AI Image Generator
 
-The Chrome extension creates AI-generated images based on the user prompt.  The extension communicates with the image generation model through a backend proxy server using a REST API for seamless and secure processing and delivery of the images. 
+The Chrome extension creates AI-generated images based on the user prompt.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ This Chrome extension allows users to input a prompt and receive a set of AI-gen
 
 ## Image Generation Model
 
-- **High-frequency positioning data of public transport in Helsinki**: [HFP API](https://digitransit.fi/en/developers/apis/4-realtime-api/vehicle-positions/)
+- **SDXL text-to-image model from stability.ai**: [SDXL & SD1.6](https://platform.stability.ai/docs/api-reference#tag/SDXL-and-SD1.6)
 
 ## Technology
 
