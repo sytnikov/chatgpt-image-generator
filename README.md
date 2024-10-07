@@ -36,4 +36,4 @@ This Chrome extension allows users to input a prompt and receive a set of AI-gen
 
 ## Deployment
 
-The backend proxy server is deployed on [Vercel](https://vercel.com).
+This Chrome extension is published in the [Google Chrome Webstore](https://chromewebstore.google.com/detail/chatgpt-image-generator/nnpdeoblieaeppbbemdbdbpajcpoogcp?hl=en-US&utm_source=ext_sidebar). The backend proxy server is deployed on [Vercel](https://vercel.com).
