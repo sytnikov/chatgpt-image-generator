@@ -1,4 +1,5 @@
 import {
+  GENERATIONS_KEY,
   MINIMIZED_KEY,
   POSITION_KEY,
 } from '../utils/constants'
@@ -13,37 +14,26 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.tabs.create({ url: 'https://gpt-image-generator.com/welcome/' })
 
     // chrome.cookies.remove(
-    //   { url: 'https://gpt-image-generator.com', name: 'installDate' },
-    //   (details) => {
-    //     if (details) {
-    //       console.log('installDate cookie deleted:', details)
-    //     } else {
-    //       console.log('installDate cookie was not found')
-    //     }
-    //   }
-    // )
-
-    // chrome.cookies.remove(
     //   { url: 'https://gpt-image-generator.com', name: 'installationDate' },
     //   (details) => {
     //     if (details) {
-    //       console.log('installationDate cookie deleted:', details)
+    //       console.log('[REMOVE] installationDate cookie deleted:', details)
     //     } else {
-    //       console.log('installationDate cookie was not found')
+    //       console.log('[REMOVE WARNING] installationDate cookie was not found')
     //     }
     //   }
     // )
 
-    // chrome.cookies.remove(
-    //   { url: 'https://gpt-image-generator.com', name: 'generationsNumber' },
-    //   (details) => {
-    //     if (details) {
-    //       console.log('generationsNumber cookie deleted:', details)
-    //     } else {
-    //       console.log('generationsNumber cookie was not found')
-    //     }
-    //   } 
-    // )
+    chrome.cookies.remove(
+      { url: 'https://gpt-image-generator.com', name: 'generationsNumber' },
+      (details) => {
+        if (details) {
+          console.log('[REMOVE] generationsNumber cookie deleted:', details)
+        } else {
+          console.log('[REMOVE WARNING] generationsNumber cookie was not found')
+        }
+      } 
+    )
 
     chrome.cookies.get(
       { url: 'https://gpt-image-generator.com', name: 'installationDate' },
@@ -56,6 +46,9 @@ chrome.runtime.onInstalled.addListener((details) => {
             value: new Date().toISOString(),
             expirationDate: Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60, // Set for 1 year
           })
+          console.log('[SET] installationDate cookie set')
+        } else {
+          console.log('[SET WARNING] installationDate cookie already set: ', cookie)
         }
       }
     )
@@ -68,15 +61,19 @@ chrome.runtime.onInstalled.addListener((details) => {
           chrome.cookies.set({
             url: 'https://gpt-image-generator.com',
             name: 'generationsNumber',
-            value: '11',
+            value: '4',
             expirationDate: Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60, // Set for 1 year
           })
+          console.log('[SET] generationsNumber cookie set')
+        } else {
+          console.log('[SET WARNING] generationsNumber cookie already set: ', cookie)
         }
       }
     )
   }
   storage.storageSet(POSITION_KEY, JSON.stringify({ x: '100%', y: '50%' }))
   storage.storageSet(MINIMIZED_KEY, false)
+  storage.storageSet(GENERATIONS_KEY, 0)
 })
 
 chrome.action.onClicked.addListener(() => {

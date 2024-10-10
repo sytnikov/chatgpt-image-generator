@@ -1,13 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import * as storage from '../../utils/storage'
+import { GENERATIONS_KEY } from '../../utils/constants'
 import ImageTile from '../ImageTile'
 import './Container.css'
-import Header from '../Header'
 import ImageModal from '../ImageModal'
 import FeedbackModal from '../FeedbackModal'
-import * as storage from '../../utils/storage'
 
-const Container: React.FC = () => {
+interface ContainerProps {
+  generationsLeft: string | null
+  setGenerationsLeft: (generationsLeft: string | null) => void
+}
+
+const Container: React.FC<ContainerProps> = ({
+  generationsLeft,
+  setGenerationsLeft,
+}) => {
   const [input, setInput] = useState<string>('')
   const [inputs, setInputs] = useState<string[]>([])
   const [generateClicked, setGenerateClicked] = useState<boolean>(false)
@@ -19,22 +27,39 @@ const Container: React.FC = () => {
   const [clickCount, setClickCount] = useState<number>(0)
   const textareaRef = useRef(null)
 
-  // useEffect(() => {
-  //   storage.storageGet(GENERATIONS_KEY, (storedData: string = '0') => {
-  //     const genNum = Number(JSON.parse(storedData))
-  //     setClickCount(genNum)
-  //   })
-  // }, [])
+  useEffect(() => {
+    storage.storageGet(GENERATIONS_KEY, (storedData: string = '0') => {
+      const genNum = Number(JSON.parse(storedData))
+      setClickCount(genNum)
+    })
+  }, [])
 
-  // useEffect(() => {
-  //   storage.storageSet(GENERATIONS_KEY, clickCount)
-  // }, [clickCount])
+  useEffect(() => {
+    storage.storageSet(GENERATIONS_KEY, clickCount)
+  }, [clickCount])
 
   useEffect(() => {
     if (generateClicked) {
       setInputs(Array(numPictures).fill(input))
       setSelectedImage(null)
       setGenerateClicked(false)
+
+      const updatedGenerations = Math.max(
+        parseInt(generationsLeft, 10) - numPictures,
+        0
+      )
+      setGenerationsLeft(updatedGenerations.toString())
+      chrome.cookies.set(
+        {
+          url: 'https://gpt-image-generator.com',
+          name: 'generationsNumber',
+          value: updatedGenerations.toString(),
+          expirationDate: Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60,
+        },
+        (updatedCookies) => {
+          console.log('👀 Updated generationNumbers cookie', updatedCookies)
+        }
+      )
     }
   }, [generateClicked, input, numPictures])
 
@@ -44,19 +69,26 @@ const Container: React.FC = () => {
       | React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     event.preventDefault()
-    setInputs([])
-    setSelectedImage(null)
-    setGenerateClicked(true)
-    setClickCount((prevCount) => {
-      const updatedCount = prevCount + 1
-      if (
-        updatedCount === 3 ||
-        (updatedCount > 3 && (updatedCount - 3) % 10 === 0)
-      ) {
-        setFeedbackPopup(true)
-      }
-      return updatedCount
-    })
+
+    if (parseInt(generationsLeft, 10) > 0) {
+      setInputs([])
+      setSelectedImage(null)
+      setGenerateClicked(true)
+      setClickCount((prevCount) => {
+        const updatedCount = prevCount + 1
+        if (
+          updatedCount === 3 ||
+          (updatedCount > 3 && (updatedCount - 3) % 28 === 0)
+        ) {
+          setFeedbackPopup(true)
+        }
+        return updatedCount
+      })
+    } else {
+      alert(
+        'You have reached the maximum number of free generations. Please upgrade to continue.'
+      )
+    }
   }
 
   const handleImageClick = (imageUrl: string) => {
@@ -86,7 +118,6 @@ const Container: React.FC = () => {
   return (
     <>
       <div className="container">
-        <Header />
         <div className="container-wrapper">
           <div className="instructions">
             <h1>Write a prompt below ✍🏼</h1>
