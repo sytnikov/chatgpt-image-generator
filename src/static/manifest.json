@@ -26,6 +26,6 @@
       "run_at": "document_end"
     }
   ],
-  "permissions": ["storage", "tabs"],
+  "permissions": ["storage", "tabs", "cookies"],
   "host_permissions": [ "http://*/*", "https://*/*"]
 }

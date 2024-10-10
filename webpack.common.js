@@ -57,13 +57,42 @@ module.exports = {
   },
 }
 
+// function getHtmlPlugins(chunks) {
+//   return chunks.map(
+//     (chunk) => 
+//     new HtmlPlugin({
+//       title: "Chat",
+//       filename: `${chunk}.html`,
+//       chunks: [chunk],
+//     })
+//   )
+// }
+
 function getHtmlPlugins(chunks) {
-  return chunks.map(
-    (chunk) =>
-      new HtmlPlugin({
-        title: 'ChatGPT Image Generator',
-        filename: `${chunk}.html`,
-        chunks: [chunk],
-      })
-  )
+  return chunks.map((chunk) => {
+    const config = {
+      title: 'ChatGPT Image Generator',
+      filename: `${chunk}.html`,
+      chunks: [chunk],
+    };
+
+     // injecting wall.js script into page.html file
+    if (chunk === 'page') {
+      config.templateContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>ChatGPT Image Generator</title>
+            <script src="./wall.js"></script>
+          </head>
+          <body>
+            <div id="root"></div>
+          </body>
+        </html>`;
+    }
+
+    return new HtmlPlugin(config);
+  });
 }
