@@ -6,15 +6,20 @@ import ImageTile from '../ImageTile'
 import './Container.css'
 import ImageModal from '../ImageModal'
 import FeedbackModal from '../FeedbackModal'
+import { User } from '../../utils/types/User'
 
 interface ContainerProps {
   generationsLeft: string | null
   setGenerationsLeft: (generationsLeft: string | null) => void
+  onPaywallOpen: () => void
+  user: User | null
 }
 
 const Container: React.FC<ContainerProps> = ({
   generationsLeft,
   setGenerationsLeft,
+  user,
+  onPaywallOpen,
 }) => {
   const [input, setInput] = useState<string>('')
   const [inputs, setInputs] = useState<string[]>([])
@@ -48,6 +53,7 @@ const Container: React.FC<ContainerProps> = ({
         parseInt(generationsLeft, 10) - numPictures,
         0
       )
+      // consider moving it to a deeper layer to decrease the number of pictures only if the generation was a success
       setGenerationsLeft(updatedGenerations.toString())
       chrome.cookies.set(
         {
@@ -55,10 +61,10 @@ const Container: React.FC<ContainerProps> = ({
           name: 'generationsNumber',
           value: updatedGenerations.toString(),
           expirationDate: Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60,
-        },
-        (updatedCookies) => {
-          console.log('👀 Updated generationNumbers cookie', updatedCookies)
         }
+        // (updatedCookies) => {
+        //   console.log('👀 Updated generationNumbers cookie', updatedCookies)
+        // }
       )
     }
   }, [generateClicked, input, numPictures])
@@ -70,24 +76,25 @@ const Container: React.FC<ContainerProps> = ({
   ) => {
     event.preventDefault()
 
-    if (parseInt(generationsLeft, 10) > 0) {
+    if (parseInt(generationsLeft, 10) > 0 || (user !== null && user.subscriptions[0]?.status === "active")) {
       setInputs([])
       setSelectedImage(null)
       setGenerateClicked(true)
       setClickCount((prevCount) => {
         const updatedCount = prevCount + 1
         if (
-          updatedCount === 3 ||
-          (updatedCount > 3 && (updatedCount - 3) % 28 === 0)
+          updatedCount === 5 ||
+          (updatedCount > 5 && (updatedCount - 5) % 20 === 0)
         ) {
           setFeedbackPopup(true)
         }
         return updatedCount
       })
     } else {
-      alert(
-        'You have reached the maximum number of free generations. Please upgrade to continue.'
-      )
+      // alert(
+      //   'You have reached the maximum number of free generations. Please upgrade to continue.'
+      // )
+      onPaywallOpen()
     }
   }
 

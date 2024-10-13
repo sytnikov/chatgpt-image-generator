@@ -1,12 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import './page.css'
 import Container from './Container'
 import Header from './Header'
+import { User } from '../utils/types/User'
+
+declare global {
+  interface Window {
+    paywall: {
+      open: () => Promise<any>
+      signOut: () => Promise<any>
+      getUser: () => Promise<any>
+    }
+  }
+}
 
 const App: React.FC<{}> = () => {
   const [generationsLeft, setGenerationsLeft] = useState<string | null>(null)
+  const [isPaywallOpen, setIsPaywallOpen] = useState<boolean>(false)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     chrome.cookies.get(
@@ -22,11 +35,71 @@ const App: React.FC<{}> = () => {
     )
   }, [])
 
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = './wall.js'
+    script.async = true
+    script.onload = async () => {
+      console.log('Paywall script loaded successfully')
+      if (window.paywall) {
+        await handleGetUser()
+      }
+    }
+    script.onerror = () => {
+      console.error('Failed to load the paywall script')
+    }
+    document.body.appendChild(script)
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  const handleOpenPaywall = useCallback(async () => {
+    try {
+      await window.paywall?.open?.()
+      setIsPaywallOpen(true)
+    } catch (error) {
+      console.error('Error opening the paywall:', error)
+    }
+  }, [])
+
+  const handleGetUser = async () => {
+    try {
+      console.log('Fetching user data...')
+      const userData: User = await window.paywall?.getUser?.()
+      if (userData.user) {
+        setUser(userData)
+        console.log('👀 User data from page', userData)
+      } else {
+        console.log("User data not found");
+        setUser(null)
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setUser(null)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await window.paywall?.signOut?.()
+      console.log('👀 Successfully signed out')
+      window.location.reload();
+    } catch (error) {
+      console.log('Error logging out: ', error)
+    }
+  }
+
   return (
     <div>
       <div className="oval-stain"></div>
-      <Header generationsLeft={generationsLeft}/>
-      <Container generationsLeft={generationsLeft} setGenerationsLeft={setGenerationsLeft}/>
+      <Header generationsLeft={generationsLeft} user={user} onSignOut={handleSignOut}/>
+      <Container
+        generationsLeft={generationsLeft}
+        setGenerationsLeft={setGenerationsLeft}
+        user={user}
+        onPaywallOpen={handleOpenPaywall}
+      />
     </div>
   )
 }
