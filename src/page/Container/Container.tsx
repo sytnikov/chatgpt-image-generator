@@ -31,6 +31,7 @@ const Container: React.FC<ContainerProps> = ({
   const [feedbackPopup, setFeedbackPopup] = useState<boolean>(false)
   const [clickCount, setClickCount] = useState<number>(0)
   const textareaRef = useRef(null)
+  const availableGenerations = parseInt(generationsLeft, 10)
 
   useEffect(() => {
     storage.storageGet(GENERATIONS_KEY, (storedData: string = '0') => {
@@ -50,7 +51,7 @@ const Container: React.FC<ContainerProps> = ({
       setGenerateClicked(false)
 
       const updatedGenerations = Math.max(
-        parseInt(generationsLeft, 10) - numPictures,
+        availableGenerations - numPictures,
         0
       )
       // consider moving it to a deeper layer to decrease the number of pictures only if the generation was a success
@@ -74,30 +75,49 @@ const Container: React.FC<ContainerProps> = ({
       | React.MouseEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
-    event.preventDefault()
-
-    if (parseInt(generationsLeft, 10) > 0 || (user !== null && user.subscriptions[0]?.status === "active")) {
-      setInputs([])
-      setSelectedImage(null)
-      setGenerateClicked(true)
+    event.preventDefault();
+  
+    const isUserWithActiveSubscription = user !== null && user.subscriptions[0]?.status === "active";
+  
+    if (isUserWithActiveSubscription) {
+      
+      setInputs([]);
+      setSelectedImage(null);
+      setNumPictures(numPictures);
+      setGenerateClicked(true);
       setClickCount((prevCount) => {
-        const updatedCount = prevCount + 1
+        const updatedCount = prevCount + 1;
         if (
           updatedCount === 5 ||
           (updatedCount > 5 && (updatedCount - 5) % 20 === 0)
         ) {
-          setFeedbackPopup(true)
+          setFeedbackPopup(true);
         }
-        return updatedCount
-      })
+        return updatedCount;
+      });
     } else {
-      // alert(
-      //   'You have reached the maximum number of free generations. Please upgrade to continue.'
-      // )
-      onPaywallOpen()
+      if (availableGenerations > 0) {
+        const imagesToGenerate = Math.min(numPictures, availableGenerations);
+        setInputs([]);
+        setSelectedImage(null);
+        setNumPictures(imagesToGenerate);
+        setGenerateClicked(true);
+        setClickCount((prevCount) => {
+          const updatedCount = prevCount + 1;
+          if (
+            updatedCount === 5 ||
+            (updatedCount > 5 && (updatedCount - 5) % 20 === 0)
+          ) {
+            setFeedbackPopup(true);
+          }
+          return updatedCount;
+        });
+      } else {
+        onPaywallOpen();
+      }
     }
-  }
-
+  };
+  
   const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl)
   }
@@ -132,9 +152,9 @@ const Container: React.FC<ContainerProps> = ({
           </div>
           <div className="example">
             <p>For example:</p>
-            <text>
+            <span>
               a giraffe wearing sunglasses, or ancient ruins underwater
-            </text>
+            </span>
           </div>
         </div>
         <div className="container-wrapper">

@@ -64,8 +64,8 @@ const App: React.FC<{}> = () => {
   }, [])
 
   const handleGetUser = async () => {
+    console.log('Fetching user data...')
     try {
-      console.log('Fetching user data...')
       const userData: User = await window.paywall?.getUser?.()
       if (userData.user) {
         setUser(userData)
@@ -92,28 +92,39 @@ const App: React.FC<{}> = () => {
 
   return (
     <div>
-      <div className="oval-stain"></div>
-      <Header
-        generationsLeft={generationsLeft}
-        user={user}
-        onSignOut={handleSignOut}
-      />
-      <Container
-        generationsLeft={generationsLeft}
-        setGenerationsLeft={setGenerationsLeft}
-        user={user}
-        onPaywallOpen={handleOpenPaywall}
-      />
-      <p style={{ textAlign: 'center' }}>
-        Support email:{' '}
-        <a
-          href="mailto:aitools.extentions@gmail.com"
-          style={{ textDecoration: "underline", color: "rgba(255, 255, 255, 0.7)" }}
-        >
-          aitools.extentions@gmail.com
-        </a>
-      </p>
+      <div className="grid-container">
+      <div className="content">
+        <div className="oval-stain"></div>
+        <Header
+          generationsLeft={generationsLeft}
+          user={user}
+          onSignOut={handleSignOut}
+        />
+        <Container
+          generationsLeft={generationsLeft}
+          setGenerationsLeft={setGenerationsLeft}
+          user={user}
+          onPaywallOpen={handleOpenPaywall}
+        />
+      </div>
+      {/* consider moving footer into a separate component */}
+      <footer>
+        <p style={{ textAlign: 'center' }}>
+          Support email:{' '}
+          <a
+            href="mailto:aitools.extentions@gmail.com"
+            style={{
+              textDecoration: 'underline',
+              color: 'rgba(255, 255, 255, 0.7)',
+            }}
+          >
+            aitools.extentions@gmail.com
+          </a>
+        </p>
+      </footer>
     </div>
+    </div>
+    
   )
 }
 

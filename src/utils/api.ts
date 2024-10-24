@@ -24,8 +24,8 @@ export async function fetchImageModelData(
 
   try {
     const response = await fetch(
-      // 'https://image-generator-proxy-server.vercel.app/stability-model',
-      'http://localhost:8000/stability-model',
+      'https://image-generator-proxy-server.vercel.app/stability-model',
+      // 'http://localhost:8000/stability-model',
       {
         method: 'POST',
         headers: {

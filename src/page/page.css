@@ -17,6 +17,21 @@ body {
   min-height: 100vh;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-rows: 20px 1fr 20px;
+  height: 90vh;
+  width: 100%;
+}
+
+.content {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+}
+
 .oval-stain {
   position: absolute;
   z-index: -1;
@@ -30,4 +45,8 @@ body {
   border-radius: 9999px; /* Equivalent to rounded-full */
   background-color: rgba(114, 79, 223, 0.5);
   filter: blur(100px);
+}
+
+footer {
+  grid-row: 3;
 }

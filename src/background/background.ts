@@ -52,7 +52,7 @@ chrome.runtime.onInstalled.addListener((details) => {
           chrome.cookies.set({
             url: 'https://gpt-image-generator.com',
             name: 'generationsNumber',
-            value: '7',
+            value: '5',
             expirationDate: Math.floor(Date.now() / 1000) + 365 * 24 * 60 * 60, // Set for 1 year
           })
           console.log('[SET] generationsNumber set')
