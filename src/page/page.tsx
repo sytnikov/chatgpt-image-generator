@@ -71,11 +71,11 @@ const App: React.FC<{}> = () => {
         setUser(userData)
         console.log('👀 User data from page', userData)
       } else {
-        console.log("User data not found");
+        console.log('User data not found')
         setUser(null)
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error('Error fetching user data:', error)
       setUser(null)
     }
   }
@@ -84,7 +84,7 @@ const App: React.FC<{}> = () => {
     try {
       await window.paywall?.signOut?.()
       console.log('👀 Successfully signed out')
-      window.location.reload();
+      window.location.reload()
     } catch (error) {
       console.log('Error logging out: ', error)
     }
@@ -93,13 +93,26 @@ const App: React.FC<{}> = () => {
   return (
     <div>
       <div className="oval-stain"></div>
-      <Header generationsLeft={generationsLeft} user={user} onSignOut={handleSignOut}/>
+      <Header
+        generationsLeft={generationsLeft}
+        user={user}
+        onSignOut={handleSignOut}
+      />
       <Container
         generationsLeft={generationsLeft}
         setGenerationsLeft={setGenerationsLeft}
         user={user}
         onPaywallOpen={handleOpenPaywall}
       />
+      <p style={{ textAlign: 'center' }}>
+        Support email:{' '}
+        <a
+          href="mailto:aitools.extentions@gmail.com"
+          style={{ textDecoration: "underline", color: "rgba(255, 255, 255, 0.7)" }}
+        >
+          aitools.extentions@gmail.com
+        </a>
+      </p>
     </div>
   )
 }
